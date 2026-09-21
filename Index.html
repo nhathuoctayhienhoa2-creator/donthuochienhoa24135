@@ -1,0 +1,1955 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nhà thuốc Hiền Hòa 2</title>
+<style>
+:root{--primary:#087f5b;--primary-dark:#066b4d;--bg:#f4f7f6;--text:#18332b;--muted:#718078;--border:#dce8e2;--danger:#b42318;--warning:#9a6700}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;margin:0;background:var(--bg);color:var(--text)}
+header{background:var(--primary);color:#fff;padding:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header b{font-size:18px}
+main{max-width:1100px;margin:auto;padding:16px}
+.card{background:#fff;padding:18px;border-radius:12px;margin-bottom:14px;box-shadow:0 2px 10px #0001}
+input,button,select,textarea{padding:11px;border-radius:8px;border:1px solid #ccd8d3;margin:4px;font:inherit}
+input,select,textarea{background:#fff;color:var(--text)}
+button{background:var(--primary);color:#fff;cursor:pointer;border:none}
+button:hover{background:var(--primary-dark)}
+button.secondary{background:#eef5f2;color:var(--text);border:1px solid var(--border)}
+button.danger{background:var(--danger)}
+button.small{padding:7px 10px;font-size:13px}
+.item{border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0}
+.muted{color:var(--muted);font-size:13px}
+.notice{background:#fff4d1;padding:12px;border-left:4px solid #d99b00;margin-top:10px}
+.hidden{display:none!important}
+select{width:100%;font-size:16px}
+h2{margin-top:0}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.grid>*{min-width:0}
+label{display:block;font-weight:600;margin:8px 4px 2px}
+textarea{width:100%;min-height:100px;resize:vertical}
+#q{width:100%;margin:0}
+#userbar{display:flex;align-items:center;gap:8px}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#e7f5ef;color:#066b4d;font-size:12px;font-weight:700}
+.group-title{font-weight:700;color:#066b4d;margin-bottom:4px}
+.admin-only{display:none}
+body.admin-mode .admin-only{display:block}
+table{width:100%;border-collapse:collapse}
+th,td{padding:9px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:#f5f8f6}
+.actions{white-space:nowrap}
+@media(max-width:700px){.grid{grid-template-columns:1fr}header{align-items:flex-start}.actions{white-space:normal}table{font-size:13px}}
+</style>
+
+<script id="portable-database-guard">
+(function () {
+  try {
+    const key = "hienhoa2_medicine_data_v4_20260921";
+    const raw = localStorage.getItem(key);
+    if (raw) {
+      const data = JSON.parse(raw);
+      if (!Array.isArray(data) || data.length < 43) {
+        localStorage.removeItem(key);
+      }
+    }
+  } catch (e) {
+    try { localStorage.removeItem("hienhoa2_medicine_data_v4_20260921"); } catch (_) {}
+  }
+})();
+</script>
+
+
+<style id="group-result-list-style">
+#results .result-card{margin-bottom:10px}
+#results .result-card h3{margin:5px 0}
+#results .result-card ul{margin:6px 0 0 18px}
+</style>
+
+<style id="ui-update-v2">
+html, body {
+  background: #000 !important;
+  color: #fff !important;
+}
+body, body * {
+  color: #fff;
+}
+input, select, textarea {
+  background: #111 !important;
+  color: #fff !important;
+  border-color: #666 !important;
+}
+button {
+  color: #fff !important;
+}
+.result-card, .card, .medicine-card, .detail-card, .admin-panel,
+#results > div, .results > div {
+  color: #fff !important;
+}
+.medicine-card, .result-card, .detail-card {
+  background: #111 !important;
+  border-color: #555 !important;
+}
+
+/* Larger text for prescription / medicine details */
+.prescription, .prescription *,
+.medicine-detail, .medicine-detail *,
+.dosage, .dosage *,
+.medication, .medication *,
+.medicine-info, .medicine-info *,
+.recipe, .recipe *,
+.detail-content, .detail-content * {
+  font-size: 18px !important;
+  line-height: 1.65 !important;
+}
+
+/* Login status kept compact */
+#loginStatus, .login-status, .user-status {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+}
+#logoutBtn, #btnLogout, button[onclick*="logout" i] {
+  margin-left: 4px !important;
+  padding: 5px 10px !important;
+  white-space: nowrap !important;
+}
+
+/* Numbered medicine list */
+.prescription ol, .medicine-list ol, .recipe ol,
+.prescription-list ol, .medicine-items ol {
+  margin: 8px 0 8px 28px !important;
+  padding-left: 22px !important;
+}
+.prescription ul, .medicine-list ul, .recipe ul,
+.prescription-list ul, .medicine-items ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+</style>
+
+
+<style id="ui-update-v3">
+/* ===== Giao diện hài hòa ===== */
+html, body {
+  background: #f4f7f6 !important;
+  color: #263238 !important;
+}
+
+body {
+  font-family: Arial, "Segoe UI", sans-serif !important;
+}
+
+/* Khung xanh lá trên cùng */
+header, .header, .top-header, .app-header,
+.top-bar, .user-bar, .login-status, #loginStatus, .user-status {
+  color: #fff !important;
+}
+
+/* Ưu tiên khung xanh lá chứa thông tin đăng nhập */
+.top-header, .app-header, .top-bar {
+  background: linear-gradient(135deg, #176b45, #238b5a) !important;
+  border-color: #0f5938 !important;
+}
+
+/* Các khối nội dung */
+.card, .result-card, .medicine-card, .detail-card,
+.admin-panel, .panel, .search-box, .section {
+  background: #fff !important;
+  color: #263238 !important;
+  border-color: #d9e3df !important;
+  box-shadow: 0 2px 8px rgba(30, 70, 50, .08) !important;
+}
+
+.card *, .result-card *, .medicine-card *, .detail-card *,
+.admin-panel *, .panel *, .search-box *, .section * {
+  color: #263238;
+}
+
+/* Ô nhập liệu */
+input, select, textarea {
+  background: #fff !important;
+  color: #263238 !important;
+  border: 1px solid #b8c9c2 !important;
+  border-radius: 7px !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: #238b5a !important;
+  box-shadow: 0 0 0 2px rgba(35,139,90,.15) !important;
+  outline: none !important;
+}
+
+/* Nút */
+button {
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+}
+button:not(#logoutBtn):not(#btnLogout) {
+  background: #238b5a !important;
+  color: #fff !important;
+  border-color: #1c744b !important;
+}
+button:not(#logoutBtn):not(#btnLogout):hover {
+  background: #176b45 !important;
+}
+
+/* Trạng thái đăng nhập: nằm gọn trong khung xanh lá */
+#loginStatus, .login-status, .user-status {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 8px !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: #fff !important;
+}
+#loginStatus *, .login-status *, .user-status * {
+  color: #fff !important;
+}
+
+/* Nút Đăng xuất đứng NGAY SAU tên đăng nhập */
+#loginStatus #logoutBtn, #loginStatus #btnLogout,
+.login-status #logoutBtn, .login-status #btnLogout,
+.user-status #logoutBtn, .user-status #btnLogout,
+#loginStatus button[onclick*="logout" i],
+.login-status button[onclick*="logout" i],
+.user-status button[onclick*="logout" i] {
+  order: 99 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 0 0 3px !important;
+  padding: 4px 9px !important;
+  background: rgba(255,255,255,.14) !important;
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,.5) !important;
+  font-size: 13px !important;
+}
+#loginStatus #logoutBtn:hover, #loginStatus #btnLogout:hover,
+.login-status #logoutBtn:hover, .login-status #btnLogout:hover {
+  background: rgba(255,255,255,.25) !important;
+}
+
+/* Tiêu đề */
+h1, h2, h3, h4 {
+  color: #176b45 !important;
+}
+
+/* Phần kết quả */
+.result-card {
+  border-left: 4px solid #238b5a !important;
+}
+
+/* Chữ đơn thuốc: to, rõ nhưng không quá nặng */
+.prescription, .prescription *,
+.medicine-detail, .medicine-detail *,
+.dosage, .dosage *,
+.medication, .medication *,
+.medicine-info, .medicine-info *,
+.recipe, .recipe *,
+.detail-content, .detail-content * {
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+}
+
+/* Danh sách thuốc */
+.prescription ul, .medicine-list ul, .recipe ul,
+.prescription-list ul, .medicine-items ul {
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+.prescription ol, .medicine-list ol, .recipe ol,
+.prescription-list ol, .medicine-items ol {
+  padding-left: 26px !important;
+  margin-left: 4px !important;
+}
+</style>
+
+
+<style id="medicine-numbering-v4-css">
+.medicine-detail > *,
+.medicine-info > *,
+.prescription > *,
+.recipe > *,
+.detail-content > * {
+  line-height: 1.65 !important;
+  margin-bottom: 6px !important;
+}
+</style>
+
+
+<style id="medicine-numbering-v5">
+.medicine-numbered-list {
+  margin: 8px 0 12px 0 !important;
+  padding-left: 30px !important;
+  list-style-type: decimal !important;
+}
+.medicine-numbered-list li {
+  display: list-item !important;
+  margin: 5px 0 !important;
+  padding-left: 4px !important;
+  font-size: 17px !important;
+  line-height: 1.6 !important;
+  list-style-type: decimal !important;
+}
+</style>
+
+
+<style id="ui-update-v6">
+/* Tên thuốc: đậm, dễ đọc trên điện thoại */
+.medicine-numbered-list li,
+.medicine-numbered-list li *,
+.medicine-detail .medicine-numbered-list li,
+.medicine-info .medicine-numbered-list li {
+  font-weight: 700 !important;
+  font-size: 17px !important;
+  line-height: 1.65 !important;
+}
+
+/* Không hiển thị các dòng quyền/đăng xuất bị lặp */
+.logout-admin-label,
+.login-admin-label,
+.admin-login-label {
+  display: none !important;
+}
+
+/* Thanh đăng nhập trên cùng */
+#loginStatus, .login-status, .user-status {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  gap: 8px !important;
+  white-space: nowrap !important;
+}
+
+/* Nút Đăng xuất nằm ngay sau thông tin người đăng nhập */
+#loginStatus #logoutBtn, #loginStatus #btnLogout,
+.login-status #logoutBtn, .login-status #btnLogout,
+.user-status #logoutBtn, .user-status #btnLogout,
+#loginStatus button[onclick*="logout" i],
+.login-status button[onclick*="logout" i],
+.user-status button[onclick*="logout" i] {
+  display: inline-flex !important;
+  order: 99 !important;
+  margin-left: 4px !important;
+  padding: 4px 10px !important;
+}
+</style>
+
+</head>
+<body>
+<header>
+  <b>🏥 <span id="brand">NHÀ THUỐC HIỀN HÒA 2</span></b>
+  <span id="userbar"></span>
+</header>
+
+<main>
+<section id="login" class="card">
+  <h2>Đăng nhập</h2>
+  <form id="loginForm">
+    <div class="grid">
+      <div><label for="u">Tài khoản</label><input id="u" autocomplete="username" placeholder="Tài khoản"></div>
+      <div><label for="p">Mật khẩu</label><input id="p" type="password" autocomplete="current-password" placeholder="Mật khẩu"></div>
+    </div>
+    <button type="submit">Đăng nhập</button>
+  </form>
+  <p id="msg" class="muted"></p>
+  <div class="notice">
+    Tài khoản mẫu chạy hoàn toàn trên trình duyệt: <b>admin / 26141131</b> và <b>user / 123456</b>.
+    Đây là cơ chế phân quyền phía giao diện, không phải xác thực máy chủ.
+  </div>
+</section>
+
+<section id="app" class="hidden">
+  <div class="card row">
+    <button id="logoutButton" class="secondary">Đăng xuất</button>
+    <span id="roleBadge" class="badge"></span>
+  </div>
+
+  <div class="card">
+    <label for="q">🔎 Tìm bệnh, hoạt chất, tên thuốc...</label>
+    <input id="q" placeholder="Ví dụ: đau đầu, paracetamol, dạ dày...">
+  </div>
+
+  <div class="card">
+    <h2>🗂️ Nhóm bệnh</h2>
+    <select id="groupSelect">
+      <option value="">-- Tất cả nhóm bệnh --</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>⭐ Danh mục bệnh / triệu chứng</h2>
+    <select id="diseaseSelect">
+      <option value="">-- Chọn bệnh / triệu chứng cần tra cứu --</option>
+    </select>
+  </div>
+
+  <div class="card">
+    <h2>📋 Kết quả tra cứu</h2>
+    <div id="results" aria-live="polite">
+      <p class="muted">Vui lòng chọn bệnh hoặc nhập từ khóa để tra cứu.</p>
+    </div>
+  </div>
+
+  <section id="adminPanel" class="card admin-only">
+    <h2>⚙️ Quản lý dữ liệu</h2>
+    <p class="muted">Chỉ tài khoản Admin được thêm, sửa, xóa dữ liệu. Dữ liệu chỉnh sửa được lưu trên trình duyệt hiện tại bằng localStorage.</p>
+
+    <form id="medicineForm">
+      <input type="hidden" id="editId">
+      <div class="grid">
+        <div>
+          <label for="medicineGroup">Nhóm bệnh</label>
+          <select id="medicineGroup" required></select>
+        </div>
+        <div>
+          <label for="medicineName">Bệnh / triệu chứng</label>
+          <input id="medicineName" required placeholder="Tên bệnh hoặc triệu chứng">
+        </div>
+        <div>
+          <label for="medicineId">ID</label>
+          <input id="medicineId" type="number" min="1" placeholder="Tự tạo nếu để trống">
+        </div>
+      </div>
+      <label for="medicineList">Danh sách thuốc / nội dung tham khảo (mỗi dòng một mục)</label>
+      <textarea id="medicineList" required placeholder="Mỗi dòng là một mục"></textarea>
+      <label for="medicineNote">Ghi chú</label>
+      <textarea id="medicineNote" placeholder="Ghi chú, cảnh báo hoặc thông tin tham khảo"></textarea>
+      <div class="row">
+        <button type="submit">💾 Lưu dữ liệu</button>
+        <button type="button" id="cancelEdit" class="secondary">Hủy sửa</button>
+        <button type="button" id="resetData" class="danger">Khôi phục dữ liệu ban đầu</button>
+      </div>
+    </form>
+
+    <hr>
+    <h3>Danh sách dữ liệu</h3>
+    <div style="overflow:auto">
+      <table>
+        <thead><tr><th>ID</th><th>Nhóm bệnh</th><th>Bệnh / triệu chứng</th><th>Số mục</th><th>Thao tác</th></tr></thead>
+        <tbody id="adminTable"></tbody>
+      </table>
+    </div>
+  
+    <hr>
+    <h3>👤 Quản trị người dùng</h3>
+    <p class="muted">Quản trị viên có quyền thêm, sửa, xóa tài khoản và phân quyền User/Admin.</p>
+    <form id="userForm">
+      <input type="hidden" id="editUserName">
+      <div class="grid">
+        <div><label for="newUsername">Tài khoản</label><input id="newUsername" required></div>
+        <div><label for="newFullName">Full name</label><input id="newFullName" required placeholder="Họ và tên"></div>
+        <div><label for="newPassword">Mật khẩu</label><input id="newPassword" type="password" required></div>
+        <div><label for="newRole">Quyền</label><select id="newRole"><option value="user">USER – Tra cứu</option><option value="admin">ADMIN – Quản trị</option></select></div>
+      </div>
+      <div class="row"><button type="submit">➕ Thêm / Lưu user</button><button type="button" id="cancelUserEdit" class="secondary">Hủy</button></div>
+    </form>
+    <div style="overflow:auto;margin-top:10px">
+      <table><thead><tr><th>Tài khoản</th><th>Full name</th><th>Quyền</th><th>Thao tác</th></tr></thead><tbody id="userAdminTable"></tbody></table>
+    </div>
+</section>
+
+  <div class="notice">
+    ⚠️ Dữ liệu được nhập từ tài liệu tham khảo nghiệp vụ, không thay thế chẩn đoán, kê đơn hoặc hướng dẫn điều trị.
+    Cần thẩm định chuyên môn trước khi sử dụng. Đặc biệt cần kiểm tra tuổi, cân nặng, bệnh nền, chống chỉ định,
+    tương tác thuốc và điều kiện sử dụng trước khi tư vấn.
+  </div>
+</section>
+</main>
+
+<script>
+const initialData = [
+  {
+    "name": "Cảm nước / Sốt / Cảm nhẹ",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Paracetamol (hoặc sủi sốt),",
+      "Cetirizin",
+      "Cefadroxil,",
+      "Methylprednisolone 4mg.",
+      "Vitamin C",
+      "Omeprazol,",
+      "Sốt ớn lạnh kèm C sủi hạ sốt (tư vấn mua thêm C sủi tăng sức đề kháng)"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 1
+  },
+  {
+    "name": "Cứng mỏi cơ thể",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Meloxicam",
+      "3B",
+      "Ginko",
+      "Methylprednisolon,",
+      "Idolpalivic",
+      "Omeprazol,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 2
+  },
+  {
+    "name": "Đau bụng kinh",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Diclofenac 7.5,",
+      "Idolpalivic,",
+      "Spasmaverine (hoặc Spaspyzin),",
+      "Meloxicam.",
+      "Omeprazol",
+      "Tư vấn uống thêm sắc cho có máu"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 3
+  },
+  {
+    "name": "Đau khớp / Gout",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Celecoxib 200,",
+      "Idolpalivic,",
+      "Diclofenac 75mg,",
+      "Methylprednisolone 4mg,",
+      "Kagasdine (Omeparazole 20mg). ,",
+      "Poncyl 500 (hoặc thay bằng Allopurinol 300 nếu bị gout)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 4
+  },
+  {
+    "name": "Đau lưng / Đau cơ / Đau toàn thân",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Đau lưng / Đau cơ 1: Alaxan, Piroxicam, Prednison, An Khớp Kiện, Para tốt, Omeprazol.",
+      "Đau lưng / Đau cơ: Meloxicam, Methylprednisolone 4mg, Idolpalivic, Diclofenac 75mg, Poncyl 500, Kagasdine (Omeparazole 20mg). .",
+      "Đau lưng / Đau cơ: Uraisan (hoặc Diclo 75), Piroxicam, Paracetamol (hoặc Hapacol), An Khớp Kiện, Omeprazol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 5
+  },
+  {
+    "name": "Đau đầu",
+    "groupId": 1,
+    "groupName": "Nhóm Giảm đau – Hạ sốt – Kháng viêm – Corticoid",
+    "medicines": [
+      "Ginkgo,",
+      "Idolpalivic (Ibu+Para) hoặc Paracetamol 650 (nếu dị ứng Ibu),",
+      "Poncyl 500 (Mefenamic),",
+      "3B,",
+      "Kagasdine (Omeparazole 20mg). (Omeparazole 20mg).",
+      "Methylprednisolone 4mg (hoặc Prednisolone 5),"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 6
+  },
+  {
+    "name": "Mụn nhọt, lở loét, trầy xước",
+    "groupId": 2,
+    "groupName": "Nhóm Kháng sinh các thế hệ",
+    "medicines": [
+      "Kháng sinh (Lincomycin, Cifixim 200, Cefuroxim 500, Klamentin 650),",
+      "Alpha-chymotripsin 2 viên hoặc Methyl 16 (TH nặng: anpha ngận, methy 1 viên uống),",
+      "Paracetamol 650 Extra,",
+      "Vitamin C 500 hoặc Vitamin A-D.",
+      "Omeprazol"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 7
+  },
+  {
+    "name": "Nhiệt miệng, lở miệng: (Vitamin C, Vitamin PP, Kẽm)",
+    "groupId": 2,
+    "groupName": "Nhóm Kháng sinh các thế hệ",
+    "medicines": [
+      "Vitamin C 500,",
+      "Vitamin PP,",
+      "Nystatin,",
+      "Kháng sinh (Cephadroxil, Cefixime, Cipocef 200...),",
+      "Methylprednisolone 4mg,",
+      "Paracetamol,",
+      "Omeprazol.",
+      "Tư vấn thêm viên sủi sensacool, livercool, kẽm, sủi C"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 8
+  },
+  {
+    "name": "Viêm Amidan",
+    "groupId": 2,
+    "groupName": "Nhóm Kháng sinh các thế hệ",
+    "medicines": [
+      "Cefadroxil (hoặc Cefa Cristorin),",
+      "Methylprednisolone 16mg,",
+      "Alpha-choay,",
+      "Acetylcystein/Eucaphor,",
+      "Hapacol 650.",
+      "Omeprazol",
+      "Khuyên KH mua thêm nước muối súc miệng, hạn chế nước đá, thịt gà"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 9
+  },
+  {
+    "name": "Đau răng / Viêm chân răng / Viêm lợi",
+    "groupId": 2,
+    "groupName": "Nhóm Kháng sinh các thế hệ",
+    "medicines": [
+      "Đau răng / Viêm chân răng / Viêm lợi Nhẹ/Trung bình:",
+      "Naphacogyl hoặc Docogyl (Spiramycin + Metronidazol),",
+      "Idolpalivic,",
+      "Poncyl 500,",
+      "Diclofenac 75mg,",
+      "Alpha-chymotripsin 2 viên.",
+      "Đau răng / Viêm chân răng / Viêm lợi Nặng (≥15 tuổi):",
+      "KS Oropharge (Spiramycin/Metronidazol),",
+      "Prednison (hoặc Methy 16),",
+      "Hapacol 650,",
+      "Taxazan (hoặc Idol palivic),",
+      "Diclo 75.",
+      "Omeprazol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 10
+  },
+  {
+    "name": "Ho khan (Người lớn)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Methorphan 2 viên,",
+      "Eucaphor,",
+      "Methylprednisolone 16,",
+      "Cefadroxil Boston,",
+      "Omeprazol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 11
+  },
+  {
+    "name": "Ho khan, khó thở khò khè: 15k/liều",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Klamentin 625 (đổi lại Cefa thì 12k/liều),",
+      "Salbutamol,",
+      "Methylprednisolone 4mg,",
+      "Ecapan,",
+      "Acetylcystein.",
+      "Omeprazol,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 12
+  },
+  {
+    "name": "Ho khô khan, ho xuyễn, khó thở, có đờm",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Cefpodoxim 200,",
+      "Prednisolon,",
+      "Hapacol 650,",
+      "Salbutamol,",
+      "Euxamus (Acetylcystein).",
+      "Omeprazol,",
+      "Ho nặng thêm Klamentin + Methy 16."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 13
+  },
+  {
+    "name": "Ho, rát họng (Phụ nữ cho con bú)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Eugica,",
+      "Cefadroxil 500 Boston,",
+      "Prednisolone 20mg,",
+      "Acetylcystein,",
+      "Hapacol 650",
+      "Omeprazol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 14
+  },
+  {
+    "name": "Ho, sốt cao, sổ mũi (Trẻ em 5-12 Tuổi)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Cefixim 100mg,",
+      "Methylprednisolon 4mg,",
+      "Euxamus (long đờm),",
+      "Toussolene (ho đỏ rẻ),",
+      "Vitamin C 250mg,",
+      "Siro ho."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 15
+  },
+  {
+    "name": "Ho, sổ mũi thông thường (trẻ em 6-12 tuổi)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Loratadin (hoặc Cetirizin, Fexofenadin),",
+      "Prednison 5mg,",
+      "Cefixim,",
+      "Bromhexine,",
+      "Omeprazol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 16
+  },
+  {
+    "name": "Ho, sổ mũi, nóng sốt (Trẻ em)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Cefixim 100,",
+      "Prednison 5,",
+      "Clorpheniramin 4,",
+      "Mitux 200,",
+      "Paracetamol (80 <10 tháng, 150 <24 tháng, 250 <48-60 tháng, 325 (6-12 tuổi),",
+      "Erolin,",
+      "AZithromax 250."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 17
+  },
+  {
+    "name": "Sổ mũi nhiều đơn thuần (Trẻ em 2-6 tuổi)",
+    "groupId": 3,
+    "groupName": "Nhóm Hô hấp (Thuốc ho, long đờm, giãn phế quản, sổ mũi, kháng histamin)",
+    "medicines": [
+      "Clorpheniramin 4mg,",
+      "Cefixim 100,",
+      "Mitux,",
+      "Paracetamol,",
+      "Prednison 5."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 18
+  },
+  {
+    "name": "Tiêu chảy (Người lớn)",
+    "groupId": 4,
+    "groupName": "Nhóm Tiêu hóa – Gan mật",
+    "medicines": [
+      "Loperamid,",
+      "Carbon (Than),",
+      "Spaspyzin,",
+      "Biosubtyl (Men vi sinh),",
+      "Metronidazol (nếu tiêu chảy nhiều)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 19
+  },
+  {
+    "name": "Tiêu chảy (Trẻ em 7 tháng - 16 tuổi)",
+    "groupId": 4,
+    "groupName": "Nhóm Tiêu hóa – Gan mật",
+    "medicines": [
+      "Smecta hoặc Grafort (Dioctahedral),",
+      "Men vi sinh,",
+      "Kèm kẽm (hỗ trợ tiêu hóa),",
+      "Oresol/kèm theo độ tuổi (7 tháng - 16 tuổi)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 20
+  },
+  {
+    "name": "Táo bón",
+    "groupId": 4,
+    "groupName": "Nhóm Tiêu hóa – Gan mật",
+    "medicines": [
+      "Spaspyzin 1 viên,",
+      "Bisacodyl 2 viên,",
+      "Biodilis 1 viên (Men, gói xơ) hoặc Sorbitol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 21
+  },
+  {
+    "name": "Ăn không tiêu / Đầy hơi / Khó tiêu",
+    "groupId": 4,
+    "groupName": "Nhóm Tiêu hóa – Gan mật",
+    "medicines": [
+      "Spaspyzin,",
+      "Cinnarizin (hoặc Dimenhydrinat),",
+      "Kremil'S 2 viên,",
+      "Modumd’S hoặc Motilium-M.",
+      "Omeparazole 20mg vĩ ,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 22
+  },
+  {
+    "name": "Đau bao tử / Dạ dày (Đau thượng vị, quặn bụng)",
+    "groupId": 5,
+    "groupName": "Nhóm Dạ dày – Trào ngược",
+    "medicines": [
+      "Spaspyzin hoặc Nospa,",
+      "Dogwazin (Sulpirid), Kremil'S,",
+      "Omeprazol 20mg,",
+      "Modumd’S hoặc Motilium-M (ói nhiều thì modum 2 viên).",
+      "Hỗ trợ thêm nghệ, Curmin, Memax, viên sủi tiêu hóa Pepti Z."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 23
+  },
+  {
+    "name": "Rối loạn tiền đình",
+    "groupId": 6,
+    "groupName": "Nhóm Cơ - Xương - Khớp – Thần kinh",
+    "medicines": [
+      "Cinnarizin,",
+      "Ginkgo,",
+      "3B",
+      "Idopalivic,",
+      "Poncyl 500,",
+      "Kagasdine (Omeparazole 20mg)"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 24
+  },
+  {
+    "name": "Đau đầu tê bì tay chân",
+    "groupId": 6,
+    "groupName": "Nhóm Cơ - Xương - Khớp – Thần kinh",
+    "medicines": [
+      "Celecoxib,",
+      "Methylprednisolone 4mg,",
+      "Idopalivic,",
+      "3B,",
+      "Ginkgo,",
+      "Mefenamic."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 25
+  },
+  {
+    "name": "Tiểu buốt, gắt có mùi, nổi mụn vùng dưới (Nặng)",
+    "groupId": 7,
+    "groupName": "Nhóm Tiết niệu – Phụ khoa – Nam khoa",
+    "medicines": [
+      "Cefuroxim 500,",
+      "Midasol (Methylene blue) 2 viên,",
+      "Cetirizin,",
+      "Methylprednisolon 16mg,",
+      "Hapacol 650.",
+      "Omeprazol,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 26
+  },
+  {
+    "name": "Tiểu gắt / Viêm đường tiết niệu cấp",
+    "groupId": 7,
+    "groupName": "Nhóm Tiết niệu – Phụ khoa – Nam khoa",
+    "medicines": [
+      "Midasol (Methylene blue) 2 viên,",
+      "Doxy hoặc Cipro-500 (Ciprofloxacin),",
+      "Methylprednisolon 4,",
+      "Hapacol 650,",
+      "Omeprazol,",
+      "Kèm theo: Sensacool, livercool, Herba cool Extra."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 27
+  },
+  {
+    "name": "Viêm phụ khoa / Hôi khí hư (Nam giới viêm dương vật)",
+    "groupId": 7,
+    "groupName": "Nhóm Tiết niệu – Phụ khoa – Nam khoa",
+    "medicines": [
+      "Doxycycline 100 (hoặc Ciprofloxacin, Cefuroxim 500),",
+      "Nystatin,",
+      "Metronidazol 500,",
+      "Vitamin C 500,",
+      "Cetirizin.",
+      "Methy 4"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 28
+  },
+  {
+    "name": "Dời leo / Thủy đậu / Xăm môi",
+    "groupId": 8,
+    "groupName": "Nhóm Da liễu – Trị mụn – Kháng nấm – Kháng virus",
+    "medicines": [
+      "Acyclovir (liều 200mg, 400mg, 800mg tùy tuổi),",
+      "Vitamin C 500,",
+      "Chữa vỡ: tuýp bôi Acyclovir, Đã bị vỡ thì dùng xanh Milian (thủy đậu),",
+      "Cetirizin (giảm ngứa),",
+      "Paracetamol."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 29
+  },
+  {
+    "name": "Thối lưỡi, ngứa, sốt",
+    "groupId": 8,
+    "groupName": "Nhóm Da liễu – Trị mụn – Kháng nấm – Kháng virus",
+    "medicines": [
+      "KS Ciprofloxacin 500,",
+      "Methy 16,",
+      "Metronidazol,",
+      "Nystatin,",
+      "Hapacol.",
+      "Vitamin C hoặc Vitamin PP",
+      "Omeprazol,",
+      "Nếu ngứa thì thêm Cetirizin,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 30
+  },
+  {
+    "name": "Viêm da / Dị ứng (Thức ăn, thời tiết, xi măng)",
+    "groupId": 8,
+    "groupName": "Nhóm Da liễu – Trị mụn – Kháng nấm – Kháng virus",
+    "medicines": [
+      "Cetirizin (hoặc Loratadin 10),",
+      "Methionin,",
+      "Vitamin C 500,",
+      "Vitamin A-D,",
+      "Methylprednisolone 4mg,",
+      "Fexofenadin 60 (hoặc Lincomycin nếu nặng có mủ)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 31
+  },
+  {
+    "name": "Điều trị mụn (18+)",
+    "groupId": 8,
+    "groupName": "Nhóm Da liễu – Trị mụn – Kháng nấm – Kháng virus",
+    "medicines": [
+      "Acnotin (Isotretinoin 10mg),",
+      "Methionin,",
+      "Vitamin PP,",
+      "Methylprednisolon 16,",
+      "Clindamycin,",
+      "Glutathion."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 32
+  },
+  {
+    "name": "Quai bị trẻ em (~7 tuổi)",
+    "groupId": 9,
+    "groupName": "Nhóm Tai – Mũi – Họng – Mắt",
+    "medicines": [
+      "Alpha-choay Boston,",
+      "Hapacol 325,",
+      "Cefpodoxim 200,",
+      "Prednison 5mg,",
+      "Vitamin C 250."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 33
+  },
+  {
+    "name": "Viêm tai giữa",
+    "groupId": 9,
+    "groupName": "Nhóm Tai – Mũi – Họng – Mắt",
+    "medicines": [
+      "Cefuroxim 500 hoặc Klamentin,",
+      "Methylprednisolone 16mg,",
+      "Cetirizin,",
+      "Hapacol 650,",
+      "Vitamin C",
+      "Omeprazol,."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 34
+  },
+  {
+    "name": "Đau mắt (≥15 tuổi)",
+    "groupId": 9,
+    "groupName": "Nhóm Tai – Mũi – Họng – Mắt",
+    "medicines": [
+      "Cefixim 200,",
+      "Hapacol,",
+      "Prednison 5mg,",
+      "Alpha chymotrypsin 2 viên,",
+      "Omeprazol,"
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "Theo điều kiện/độ tuổi ghi trong cơ sở dữ liệu chuẩn",
+    "id": 35
+  },
+  {
+    "name": "Đau mắt đỏ / Mắt hàn",
+    "groupId": 9,
+    "groupName": "Nhóm Tai – Mũi – Họng – Mắt",
+    "medicines": [
+      "Kháng sinh (Cepha, Doxycycline, Cifixim...),",
+      "Alpha-chymotripsin,",
+      "Cetirizin,",
+      "Vitamin C 500,",
+      "Vitamin A-D,",
+      "Tobramycin nhỏ mắt."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 36
+  },
+  {
+    "name": "Thông tin nhóm",
+    "groupId": 10,
+    "groupName": "Nhóm Tim mạch – Huyết áp – Mỡ máu – Tiểu đường",
+    "medicines": [
+      "Hiện tại trong tài liệu cắt liều quầy thuốc của Nhà thuốc Hiền Hòa 2 chưa có phác đồ chuyên khoa riêng cho nhóm này, chủ yếu tập trung vào các bệnh lý cấp tính và thông dụng."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 37
+  },
+  {
+    "name": "Thông tin tích hợp",
+    "groupId": 11,
+    "groupName": "Nhóm Dị ứng – Giải độc – Kháng histamin",
+    "medicines": [
+      "Đã được tích hợp chung trong các nhóm Viêm da dị ứng, Sổ mũi, Hô hấp: sử dụng Cetirizin, Loratadin, Fexofenadin, Clorpheniramin."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 38
+  },
+  {
+    "name": "Bổ trợ chung",
+    "groupId": 12,
+    "groupName": "Nhóm Vitamin, Khoảng chất & Thực phẩm chức năng",
+    "medicines": [
+      "Vitamin C (250mg, 500mg),",
+      "Vitamin PP,",
+      "Vitamin A-D, 3B,",
+      "Magie B6,",
+      "Rutin C,",
+      "Vitamin E 400,",
+      "Men tiêu hóa, C sủi, tinh bột nghệ (Curmin, Memax)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 39
+  },
+  {
+    "name": "Say xe",
+    "groupId": 12,
+    "groupName": "Nhóm Vitamin, Khoảng chất & Thực phẩm chức năng",
+    "medicines": [
+      "Vomina Plus hoặc Nautamin (hoặc vỉ say xe 4 viên) 15k/ liều,",
+      "3B,",
+      "Panadol 500,",
+      "Ginkgo."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 40
+  },
+  {
+    "name": "Rong kinh (Uống ngày 2 lần, trong 3 ngày)",
+    "groupId": 13,
+    "groupName": "Nhóm Nội tiết tố – Tránh thai",
+    "medicines": [
+      "Rutin C 2 viên,",
+      "Vitamin E 400 2 viên,",
+      "Orgametril (Lynestrenol 5mg) (trong tủ thuốc huyết áp)."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 41
+  },
+  {
+    "name": "Danh mục chăm sóc cá nhân",
+    "groupId": 14,
+    "groupName": "Nhóm Dược mỹ phẩm & Chăm sóc cá nhân",
+    "medicines": [
+      "Kem bôi da Acyclovir, sữa rửa mặt/kem trị mụn, dung dịch vệ sinh, kem bôi thủy đậu."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 42
+  },
+  {
+    "name": "Danh mục vật tư tiêu hao",
+    "groupId": 15,
+    "groupName": "Nhóm Vật tư y tế tiêu hao & Dụng cụ",
+    "medicines": [
+      "Nước muối sinh lý, bông băng gạc, cồn y tế, dung dịch sát khuẩn Povidine (thuốc đỏ), xanh Milian."
+    ],
+    "note": "",
+    "sourceStatus": "Theo cơ sở dữ liệu chuẩn do người dùng cung cấp; cần thẩm định chuyên môn trước khi sử dụng.",
+    "ageGroup": "",
+    "id": 43
+  }
+];
+const STORAGE_KEY = "hienhoa2_medicine_data_v4_20260921";
+const SESSION_KEY = "hienhoa2_session_v2";
+
+/*
+ * DEMO ACCOUNTS ONLY.
+ * Không dùng mật khẩu hard-code này cho website public.
+ * Khi triển khai thực tế cần authentication ở backend + session/secure cookie.
+ */
+const ACCOUNTS_KEY = "hienhoa2_accounts_v1";
+let accounts = {
+  admin: {password:"26141131", role:"admin", fullName:"Nguyễn Thanh Xuân"},
+  user:  {password:"123456", role:"user", fullName:"Nguyễn Thị Như Ý"}
+};
+try {
+  const savedAccounts = JSON.parse(localStorage.getItem(ACCOUNTS_KEY) || "null");
+  if (savedAccounts && typeof savedAccounts === "object" && savedAccounts.admin) accounts = savedAccounts;
+} catch(e) {}
+
+// Bổ sung Full name cho tài khoản cũ nếu chưa có.
+if (accounts.admin) accounts.admin.fullName = accounts.admin.fullName || "Nguyễn Thanh Xuân";
+if (accounts.user) accounts.user.fullName = accounts.user.fullName || "Nguyễn Thị Như Ý";
+try { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts)); } catch(e) {}
+
+let data = loadData();
+let currentUser = null;
+
+function cloneInitialData(){
+  return JSON.parse(JSON.stringify(initialData));
+}
+
+function loadData() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Only accept stored data when it is a valid non-empty array.
+        // Otherwise always fall back to the database embedded in this file.
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.warn("Không đọc được dữ liệu lưu cục bộ, dùng CSDL chuẩn:", e);
+    }
+    return JSON.parse(JSON.stringify(initialData));
+  }
+
+function saveData(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function normalize(value){
+  return String(value ?? "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/đ/gi,"d")
+    .toLowerCase()
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+function login(){
+  const u = document.getElementById("u").value.trim();
+  const p = document.getElementById("p").value;
+  const account = accounts[u];
+
+  if(account && account.password === p){
+    currentUser = {username:u, role:account.role};
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(currentUser));
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+    document.body.classList.toggle("admin-mode", account.role === "admin");
+    document.getElementById("roleBadge").textContent =
+      account.role === "admin" ? "ADMIN – Quản trị" : "USER – Tra cứu";
+    document.getElementById("userbar").innerHTML =
+      '<span>👤 '+escapeHTML(account.fullName || u)+'</span> <span class="badge">'+
+      (account.role === "admin" ? "ADMIN" : "USER")+"</span>";
+    document.getElementById("msg").textContent = "";
+    loadGroupList();
+    loadDiseaseList();
+    loadMedicineGroupList();
+    renderAdminTable();
+  }else{
+    document.getElementById("msg").textContent = "Sai tài khoản hoặc mật khẩu.";
+  }
+}
+
+function logout(){
+  currentUser = null;
+  sessionStorage.removeItem(SESSION_KEY);
+  document.body.classList.remove("admin-mode");
+  document.getElementById("app").classList.add("hidden");
+  document.getElementById("login").classList.remove("hidden");
+  document.getElementById("u").value = "";
+  document.getElementById("p").value = "";
+  document.getElementById("q").value = "";
+  document.getElementById("diseaseSelect").value = "";
+  document.getElementById("results").innerHTML =
+    '<p class="muted">Vui lòng chọn bệnh hoặc nhập từ khóa để tra cứu.</p>';
+  document.getElementById("userbar").textContent = "";
+  document.getElementById("msg").textContent = "";
+}
+
+function restoreSession(){
+  try{
+    const raw = sessionStorage.getItem(SESSION_KEY);
+    if(!raw) return;
+    const session = JSON.parse(raw);
+    if(session && accounts[session.username] && accounts[session.username].role === session.role){
+      currentUser = session;
+      document.getElementById("login").classList.add("hidden");
+      document.getElementById("app").classList.remove("hidden");
+      document.body.classList.toggle("admin-mode", session.role === "admin");
+      document.getElementById("roleBadge").textContent =
+        session.role === "admin" ? "ADMIN – Quản trị" : "USER – Tra cứu";
+      document.getElementById("userbar").innerHTML =
+        '<span>👤 '+escapeHTML((accounts[session.username] && accounts[session.username].fullName) || session.username)+'</span> <span class="badge">'+
+        (session.role === "admin" ? "ADMIN" : "USER")+"</span>";
+      loadGroupList();
+      loadDiseaseList();
+      loadMedicineGroupList();
+      renderAdminTable();
+    }
+  }catch(e){}
+}
+
+function loadGroupList(){
+  const select = document.getElementById("groupSelect");
+  select.replaceChildren();
+  const first = document.createElement("option");
+  first.value = "";
+  first.textContent = "-- Tất cả nhóm bệnh --";
+  select.appendChild(first);
+
+  const groups = [...new Map(data.map(x=>[
+    String(x.groupId),
+    {id:x.groupId,name:x.groupName}
+  ])).values()].sort((a,b)=>Number(a.id)-Number(b.id));
+
+  groups.forEach(group=>{
+    const option = document.createElement("option");
+    option.value = String(group.id);
+    option.textContent = "Nhóm " + group.id + ": " + group.name;
+    select.appendChild(option);
+  });
+}
+
+function loadDiseaseList(groupId=""){
+  const select = document.getElementById("diseaseSelect");
+  select.replaceChildren();
+  const first = document.createElement("option");
+  first.value = "";
+  first.textContent = "-- Chọn bệnh / triệu chứng cần tra cứu --";
+  select.appendChild(first);
+
+  [...data]
+    .filter(item=>!groupId || String(item.groupId) === String(groupId))
+    .sort((a,b)=>String(a.name).localeCompare(String(b.name),"vi"))
+    .forEach(item=>{
+      const option = document.createElement("option");
+      option.value = String(item.id);
+      option.textContent = item.name;
+      select.appendChild(option);
+    });
+}
+
+
+function selectGroup(){
+  const groupValue = document.getElementById("groupSelect").value;
+  const results = document.getElementById("results");
+  const diseaseSelect = document.getElementById("diseaseSelect");
+
+  if(diseaseSelect) diseaseSelect.value = "";
+
+  // "-- Tất cả nhóm bệnh --" => show every disease currently stored.
+  if(!groupValue){
+    loadDiseaseList();
+    showResults(
+      [...data].sort((a,b)=>Number(a.groupId)-Number(b.groupId) || Number(a.id)-Number(b.id))
+    );
+    return;
+  }
+
+  const groupId = Number(groupValue);
+  const groupItems = data
+    .filter(item => Number(item.groupId) === groupId)
+    .sort((a,b) => Number(a.id) - Number(b.id));
+
+  if(!groupItems.length){
+    results.innerHTML = '<p class="muted">Nhóm này chưa có dữ liệu bệnh / triệu chứng.</p>';
+    return;
+  }
+
+  // Chọn một nhóm => hiển thị toàn bộ bệnh đang lưu trong nhóm đó.
+  showResults(groupItems);
+}
+
+
+
+function renderItem(item){
+  const wrap = document.createElement("div");
+  wrap.className = "item result-card";
+
+  const group = document.createElement("div");
+  group.className = "muted";
+  group.textContent = "Nhóm " + item.groupId + ": " + item.groupName;
+  wrap.appendChild(group);
+
+  const h3 = document.createElement("h3");
+  h3.textContent = item.name;
+  wrap.appendChild(h3);
+
+  const medicines = Array.isArray(item.medicines) ? item.medicines : [];
+  if(medicines.length){
+    const ol = document.createElement("ol");
+    ol.className = "medicine-numbered-list";
+    medicines.forEach((medicine, index)=>{
+      const li = document.createElement("li");
+      li.textContent = medicine;
+      li.value = index + 1;
+      ol.appendChild(li);
+    });
+    wrap.appendChild(ol);
+  }
+
+  if(item.note){
+    const note = document.createElement("div");
+    note.className = "notice";
+    note.textContent = "💡 " + item.note;
+    wrap.appendChild(note);
+  }
+  return wrap;
+}
+
+function showResults(items){
+  const results = document.getElementById("results");
+  results.replaceChildren();
+  if(!items.length){
+    const p = document.createElement("p");
+    p.className = "muted";
+    p.textContent = "❌ Không tìm thấy kết quả phù hợp.";
+    results.appendChild(p);
+    return;
+  }
+  items.forEach(item=>results.appendChild(renderItem(item)));
+}
+
+function selectDisease(){
+  const id = document.getElementById("diseaseSelect").value;
+
+  if(!id){
+    showResults(
+      [...data].sort((a,b)=>Number(a.groupId)-Number(b.groupId) || Number(a.id)-Number(b.id))
+    );
+    return;
+  }
+
+  // Theo yêu cầu: khi chọn bệnh/triệu chứng, Kết quả tra cứu hiển thị
+  // toàn bộ các bệnh hiện đang được lưu trữ trên phần mềm.
+  showResults(
+    [...data].sort((a,b)=>Number(a.groupId)-Number(b.groupId) || Number(a.id)-Number(b.id))
+  );
+}
+
+function searchMedicine(){
+  const keyword = normalize(document.getElementById("q").value);
+  if(!keyword){
+    document.getElementById("results").innerHTML =
+      '<p class="muted">Vui lòng chọn bệnh hoặc nhập từ khóa để tra cứu.</p>';
+    return;
+  }
+
+  const found = data.filter(item=>{
+    const haystack = normalize(
+      [item.name, item.groupName || "", ...(Array.isArray(item.medicines) ? item.medicines : []), item.note || ""].join(" ")
+    );
+    return haystack.includes(keyword);
+  });
+  showResults(found);
+}
+
+function isAdmin(){
+  return currentUser && currentUser.role === "admin";
+}
+
+function renderAdminTable(){
+  const tbody = document.getElementById("adminTable");
+  tbody.replaceChildren();
+  if(!isAdmin()) return;
+
+  [...data].sort((a,b)=>Number(a.id)-Number(b.id)).forEach(item=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML =
+      "<td>"+escapeHTML(item.id)+"</td>"+
+      "<td>"+escapeHTML("Nhóm "+item.groupId+": "+item.groupName)+"</td>"+
+      "<td>"+escapeHTML(item.name)+"</td>"+
+      "<td>"+escapeHTML(Array.isArray(item.medicines)?item.medicines.length:0)+"</td>"+
+      '<td class="actions">'+
+      '<button class="small" data-action="edit" data-id="'+escapeHTML(item.id)+'">Sửa</button> '+
+      '<button class="small danger" data-action="delete" data-id="'+escapeHTML(item.id)+'">Xóa</button>'+
+      "</td>";
+    tbody.appendChild(tr);
+  });
+}
+
+function loadMedicineGroupList(selectedId=""){
+  const select = document.getElementById("medicineGroup");
+  select.replaceChildren();
+  const groups = [...new Map(data.map(x=>[
+    String(x.groupId),
+    {id:x.groupId,name:x.groupName}
+  ])).values()].sort((a,b)=>Number(a.id)-Number(b.id));
+  groups.forEach(group=>{
+    const option = document.createElement("option");
+    option.value = String(group.id);
+    option.textContent = "Nhóm " + group.id + ": " + group.name;
+    option.selected = String(group.id) === String(selectedId);
+    select.appendChild(option);
+  });
+}
+
+function resetForm(){
+  document.getElementById("editId").value = "";
+  document.getElementById("medicineId").value = "";
+  document.getElementById("medicineGroup").value = data[0] ? String(data[0].groupId) : "";
+  document.getElementById("medicineName").value = "";
+  document.getElementById("medicineList").value = "";
+  document.getElementById("medicineNote").value = "";
+}
+
+function editMedicine(id){
+  if(!isAdmin()) return;
+  const item = data.find(x=>String(x.id) === String(id));
+  if(!item) return;
+  document.getElementById("editId").value = item.id;
+  document.getElementById("medicineId").value = item.id;
+  loadMedicineGroupList(item.groupId);
+  document.getElementById("medicineName").value = item.name || "";
+  document.getElementById("medicineList").value = (item.medicines || []).join("\n");
+  document.getElementById("medicineNote").value = item.note || "";
+  document.getElementById("medicineName").focus();
+}
+
+function deleteMedicine(id){
+  if(!isAdmin()) return;
+  const item = data.find(x=>String(x.id) === String(id));
+  if(!item) return;
+  if(!confirm("Xóa dữ liệu: " + item.name + " ?")) return;
+  data = data.filter(x=>String(x.id) !== String(id));
+  saveData();
+  loadDiseaseList();
+  renderAdminTable();
+  document.getElementById("results").innerHTML =
+    '<p class="muted">Đã cập nhật dữ liệu.</p>';
+}
+
+function saveMedicine(event){
+  event.preventDefault();
+  if(!isAdmin()) return;
+
+  const editId = document.getElementById("editId").value.trim();
+  const enteredId = document.getElementById("medicineId").value.trim();
+  const groupId = Number(document.getElementById("medicineGroup").value);
+  const groupSource = data.find(x=>Number(x.groupId)===groupId);
+  const groupName = groupSource ? groupSource.groupName : "Nhóm mới";
+  const name = document.getElementById("medicineName").value.trim();
+  const medicines = document.getElementById("medicineList").value
+    .split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+  const note = document.getElementById("medicineNote").value.trim();
+
+  if(!name || !medicines.length){
+    alert("Vui lòng nhập tên bệnh/triệu chứng và ít nhất một mục thuốc/nội dung.");
+    return;
+  }
+
+  if(editId){
+    const index = data.findIndex(x=>String(x.id) === String(editId));
+    if(index < 0){ alert("Không tìm thấy dữ liệu cần sửa."); return; }
+    const newId = enteredId ? Number(enteredId) : Number(editId);
+    if(data.some((x,i)=>i!==index && Number(x.id)===newId)){
+      alert("ID đã tồn tại.");
+      return;
+    }
+    data[index] = {id:newId,groupId,groupName,name,medicines};
+    if(note) data[index].note = note;
+    else delete data[index].note;
+  }else{
+    const newId = enteredId ? Number(enteredId) : (
+      data.length ? Math.max(...data.map(x=>Number(x.id)||0))+1 : 1
+    );
+    if(data.some(x=>Number(x.id)===newId)){
+      alert("ID đã tồn tại.");
+      return;
+    }
+    const item = {id:newId,groupId,groupName,name,medicines};
+    if(note) item.note = note;
+    data.push(item);
+  }
+
+  saveData();
+  loadDiseaseList();
+  renderAdminTable();
+  resetForm();
+  alert("Đã lưu dữ liệu.");
+}
+
+function resetData(){
+  if(!isAdmin()) return;
+  if(!confirm("Khôi phục toàn bộ dữ liệu về bản ban đầu? Các thay đổi hiện tại sẽ bị xóa.")) return;
+  data = cloneInitialData();
+  saveData();
+  loadDiseaseList();
+  renderAdminTable();
+  resetForm();
+  document.getElementById("results").innerHTML =
+    '<p class="muted">Đã khôi phục dữ liệu ban đầu.</p>';
+}
+
+document.getElementById("loginForm").addEventListener("submit", e=>{
+  e.preventDefault();
+  login();
+});
+document.getElementById("logoutButton").addEventListener("click", logout);
+document.getElementById("q").addEventListener("input", searchMedicine);
+document.getElementById("groupSelect").addEventListener("change", selectGroup);
+document.getElementById("diseaseSelect").addEventListener("change", selectDisease);
+document.getElementById("medicineForm").addEventListener("submit", saveMedicine);
+document.getElementById("cancelEdit").addEventListener("click", resetForm);
+document.getElementById("resetData").addEventListener("click", resetData);
+
+document.getElementById("adminTable").addEventListener("click", e=>{
+  const button = e.target.closest("button[data-action]");
+  if(!button) return;
+  const id = button.dataset.id;
+  if(button.dataset.action === "edit") editMedicine(id);
+  if(button.dataset.action === "delete") deleteMedicine(id);
+});
+
+restoreSession();
+</script>
+
+<script id="integrated-user-admin">
+(function(){
+function saveAccounts(){localStorage.setItem(ACCOUNTS_KEY,JSON.stringify(accounts));}
+function render(){
+ const b=document.getElementById("userAdminTable");
+ if(!b||!document.body.classList.contains("admin-mode"))return;
+ b.innerHTML=Object.keys(accounts).map(n=>'<tr><td>'+escapeHTML(n)+'</td><td>'+escapeHTML(accounts[n].fullName || "")+'</td><td>'+
+ (accounts[n].role==="admin"?"ADMIN – Quản trị":"USER – Tra cứu")+
+ '</td><td><button type="button" data-ue="'+escapeHTML(n)+'">✏️ Sửa</button> <button type="button" class="danger" data-ud="'+escapeHTML(n)+'">🗑️ Xóa</button></td></tr>').join("");
+}
+function resetForm(){
+ const f=document.getElementById("userForm");if(!f)return;f.reset();
+ document.getElementById("editUserName").value="";
+ document.getElementById("newRole").value="user";
+ document.getElementById("newPassword").required=true;
+}
+document.addEventListener("DOMContentLoaded",function(){
+ const f=document.getElementById("userForm");if(!f)return;
+ f.addEventListener("submit",function(e){
+  e.preventDefault();if(!isAdmin())return;
+  const old=document.getElementById("editUserName").value.trim();
+  const n=document.getElementById("newUsername").value.trim();
+  const fullName=document.getElementById("newFullName").value.trim();
+  const p=document.getElementById("newPassword").value;
+  const r=document.getElementById("newRole").value;
+  if(!n||!fullName||(!old&&!p)){alert("Vui lòng nhập tài khoản, Full name và mật khẩu.");return;}
+  if(old){
+   if(old==="admin"&&n!=="admin"){alert("Không đổi tên admin chính.");return;}
+   if(n!==old&&accounts[n]){alert("Tên đăng nhập đã tồn tại.");return;}
+   const a=accounts[old];delete accounts[old];accounts[n]={password:p||a.password,role:r,fullName:fullName};
+  }else{
+   if(accounts[n]){alert("Tên đăng nhập đã tồn tại.");return;}
+   accounts[n]={password:p,role:r,fullName:fullName};
+  }
+  saveAccounts();resetForm();render();alert("Đã lưu tài khoản.");
+ });
+ document.getElementById("cancelUserEdit").onclick=resetForm;
+ document.getElementById("userAdminTable").onclick=function(e){
+  const ed=e.target.closest("[data-ue]"),de=e.target.closest("[data-ud]");
+  if(ed){const n=ed.dataset.ue,a=accounts[n];document.getElementById("editUserName").value=n;document.getElementById("newUsername").value=n;document.getElementById("newFullName").value=a.fullName||"";document.getElementById("newPassword").value="";document.getElementById("newPassword").required=false;document.getElementById("newRole").value=a.role;}
+  if(de){const n=de.dataset.ud;if(n==="admin"){alert("Không thể xóa admin chính.");return;}if(confirm("Xóa tài khoản "+n+"?")){delete accounts[n];saveAccounts();render();}}
+ };
+ const ob=new MutationObserver(render);ob.observe(document.body,{attributes:true,attributeFilter:["class"]});
+ setTimeout(render,300);setTimeout(render,1000);
+});
+})();
+</script>
+
+<script id="ui-update-v2-js">
+(function () {
+  function normalizeLoginBar() {
+    const candidates = [
+      document.getElementById('loginStatus'),
+      document.querySelector('.login-status'),
+      document.querySelector('.user-status')
+    ].filter(Boolean);
+
+    const status = candidates[0];
+    if (!status) return;
+
+    const logout = document.getElementById('logoutBtn')
+      || document.getElementById('btnLogout')
+      || document.querySelector('button[onclick*="logout" i]');
+
+    if (logout && logout.parentElement !== status) {
+      status.appendChild(logout);
+    }
+    if (logout) {
+      logout.style.marginLeft = '4px';
+      logout.style.display = 'inline-flex';
+    }
+  }
+
+  function numberMedicineBullets() {
+    const roots = document.querySelectorAll(
+      '.prescription, .medicine-list, .recipe, .prescription-list, .medicine-items, .medicine-detail, .detail-card'
+    );
+    roots.forEach(root => {
+      const lists = root.querySelectorAll('ul');
+      lists.forEach(ul => {
+        const items = Array.from(ul.children).filter(x => x.tagName === 'LI');
+        if (!items.length) return;
+
+        // Only convert lists that look like medicine/ingredient lines.
+        const text = ul.innerText || '';
+        const looksLikeMedicine = /thuốc|mg|ml|viên|gói|ống|lọ|siro|capsule|viên uống|uống|bôi|xịt/i.test(text);
+        if (!looksLikeMedicine) return;
+
+        const ol = document.createElement('ol');
+        ol.className = ul.className;
+        ol.style.margin = '8px 0 8px 28px';
+        ol.style.paddingLeft = '22px';
+
+        items.forEach(li => {
+          const nli = document.createElement('li');
+          nli.innerHTML = li.innerHTML;
+          nli.style.marginBottom = '6px';
+          ol.appendChild(nli);
+        });
+        ul.replaceWith(ol);
+      });
+    });
+  }
+
+  function run() {
+    normalizeLoginBar();
+    numberMedicineBullets();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  new MutationObserver(run).observe(document.body, {childList:true, subtree:true});
+})();
+</script>
+
+
+<script id="ui-update-v3-js">
+(function () {
+  function moveLogoutAfterIdentity() {
+    const logout =
+      document.getElementById('logoutBtn') ||
+      document.getElementById('btnLogout') ||
+      document.querySelector('button[onclick*="logout" i]');
+    if (!logout) return;
+
+    const status =
+      document.getElementById('loginStatus') ||
+      document.querySelector('.login-status') ||
+      document.querySelector('.user-status');
+
+    if (!status) return;
+
+    // Keep both in the same green login bar.
+    status.style.display = 'flex';
+    status.style.alignItems = 'center';
+    status.style.justifyContent = 'flex-end';
+    status.style.gap = '8px';
+    status.style.flexWrap = 'nowrap';
+
+    // If the identity is a separate element, place logout directly after it.
+    const identity = Array.from(status.children).find(el => {
+      const t = (el.innerText || '').trim();
+      return /ĐANG ĐĂNG NHẬP|ADMIN|USER|Nguyễn|👤/.test(t) && el !== logout;
+    });
+
+    if (identity && logout.previousElementSibling !== identity) {
+      identity.insertAdjacentElement('afterend', logout);
+    } else if (!logout.parentElement || logout.parentElement !== status) {
+      status.appendChild(logout);
+    }
+  }
+
+  function run() {
+    moveLogoutAfterIdentity();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+  new MutationObserver(run).observe(document.body, {childList:true, subtree:true});
+})();
+</script>
+
+
+<script id="medicine-numbering-v4">
+(function () {
+  const skipTags = new Set(['SCRIPT','STYLE','INPUT','TEXTAREA','SELECT','BUTTON','OPTION']);
+  const medicineWords = /Spaspyzin|Cinnarizin|Dimenhydrinat|Kremil|Modumd|Motilium|Omeparazole|Omeprazole|Loperamid|Smecta|Grafort|Biosubtyl|Metronidazol|Oresol|Paracetamol|Ibuprofen|Acyclovir|Cetirizin|Loratadin|Fexofenadin|Clorpheniramin|Povidine|Milian|Carbon|Than|Men vi sinh|Kẽm/i;
+
+  function cleanLine(s) {
+    return s.trim().replace(/^[•·▪▫\-–—]\s*/, '').replace(/^\d+[\.\)]\s*/, '');
+  }
+
+  function numberMedicineLines(root) {
+    if (!root || root.dataset.medicineNumbered === '1') return;
+
+    // Work on common content containers.
+    const containers = root.querySelectorAll(
+      '.medicine-detail, .medicine-info, .prescription, .recipe, .detail-content, .result-card, .card'
+    );
+
+    containers.forEach(container => {
+      if (container.dataset.medicineNumbered === '1') return;
+
+      const elements = Array.from(container.children);
+      if (!elements.length) return;
+
+      // Only act when the container has multiple direct text-bearing blocks.
+      const candidates = elements.filter(el => {
+        if (skipTags.has(el.tagName)) return false;
+        const t = cleanLine(el.innerText || '');
+        return t && medicineWords.test(t);
+      });
+
+      if (candidates.length < 2) return;
+
+      let n = 0;
+      candidates.forEach(el => {
+        const t = cleanLine(el.innerText || '');
+        if (!t) return;
+        n++;
+
+        // Remove an existing bullet/list marker only, then prepend number.
+        // Preserve inner HTML/formatting as much as possible.
+        if (el.tagName === 'LI') {
+          el.style.listStyle = 'none';
+          el.innerHTML = el.innerHTML.replace(/^\s*[•·▪▫\-–—]\s*/, '');
+          el.innerHTML = n + '. ' + el.innerHTML;
+        } else {
+          el.innerHTML = el.innerHTML.replace(/^\s*[•·▪▫\-–—]\s*/, '');
+          if (!/^\s*\d+[\.\)]\s/.test(el.textContent || '')) {
+            el.innerHTML = n + '. ' + el.innerHTML;
+          }
+        }
+      });
+
+      container.dataset.medicineNumbered = '1';
+    });
+  }
+
+  function run() {
+    // Numbering is now handled directly by renderItem(); do not rewrite DOM here.
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+
+  // Re-apply when a disease/result is opened dynamically.
+  new MutationObserver(() => {
+    clearTimeout(window.__medicineNumberTimer);
+    window.__medicineNumberTimer = setTimeout(run, 30);
+  }).observe(document.body, {childList:true, subtree:true});
+})();
+</script>
+
+
+<script id="ui-update-v6-js">
+(function () {
+  function removeDuplicateAdminLogoutText() {
+    const roots = [
+      document.getElementById('loginStatus'),
+      document.querySelector('.login-status'),
+      document.querySelector('.user-status')
+    ].filter(Boolean);
+
+    roots.forEach(root => {
+      Array.from(root.querySelectorAll('*')).forEach(el => {
+        if (el.id === 'logoutBtn' || el.id === 'btnLogout') return;
+        const t = (el.textContent || '').trim();
+        if (/Đăng xuất\s*ADMIN\s*[–-]\s*Quản trị/i.test(t) ||
+            /Đăng xuấtADMIN/i.test(t)) {
+          el.remove();
+        }
+      });
+
+      // Clean direct text nodes containing the old combined label.
+      Array.from(root.childNodes).forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE &&
+            /Đăng xuất\s*ADMIN|Đăng xuấtADMIN/i.test(node.nodeValue || '')) {
+          node.nodeValue = '';
+        }
+      });
+    });
+  }
+
+  function moveLogoutAfterIdentity() {
+    const status =
+      document.getElementById('loginStatus') ||
+      document.querySelector('.login-status') ||
+      document.querySelector('.user-status');
+
+    const logout =
+      document.getElementById('logoutBtn') ||
+      document.getElementById('btnLogout') ||
+      document.querySelector('button[onclick*="logout" i]');
+
+    if (!status || !logout) return;
+
+    const identity = Array.from(status.children).find(el => {
+      if (el === logout) return false;
+      const t = (el.innerText || '').trim();
+      return /ĐANG ĐĂNG NHẬP|ADMIN|USER|Nguyễn|👤/.test(t);
+    });
+
+    if (identity) {
+      identity.insertAdjacentElement('afterend', logout);
+    } else if (logout.parentElement !== status) {
+      status.appendChild(logout);
+    }
+  }
+
+  function showAllDiseasesAfterLogin() {
+    // Use the app's existing data/render functions after they are available.
+    if (typeof data === 'undefined' || !Array.isArray(data)) return;
+    if (typeof showResults !== 'function') return;
+
+    const all = [...data].sort((a,b) =>
+      Number(a.groupId) - Number(b.groupId) || Number(a.id) - Number(b.id)
+    );
+    showResults(all);
+  }
+
+  function run() {
+    removeDuplicateAdminLogoutText();
+    moveLogoutAfterIdentity();
+    showAllDiseasesAfterLogin();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => setTimeout(run, 100));
+  } else {
+    setTimeout(run, 100);
+  }
+
+  new MutationObserver(() => {
+    clearTimeout(window.__uiV6Timer);
+    window.__uiV6Timer = setTimeout(() => {
+      removeDuplicateAdminLogoutText();
+      moveLogoutAfterIdentity();
+    }, 30);
+  }).observe(document.body, {childList:true, subtree:true});
+})();
+</script>
+
+</body>
+</html>
